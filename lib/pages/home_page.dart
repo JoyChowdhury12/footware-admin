@@ -12,27 +12,30 @@ class HomePage extends StatelessWidget {
     return GetBuilder<HomeController>(builder: (ctrl) {
       return Scaffold(
         appBar: AppBar(
-          title: Center(
+          title: const Center(
             child: Text(
               "Footwear Admin",
             ),
           ),
         ),
         body: ListView.builder(
-            itemCount: 10,
+            itemCount: ctrl.products.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text("Title"),
-                subtitle: Text("Price : 100"),
-                trailing:
-                    IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+                title: Text(ctrl.products[index].name ?? ""),
+                subtitle: Text((ctrl.products[index].price ?? 0).toString()),
+                trailing: IconButton(
+                    onPressed: () {
+                      ctrl.deleteProduct(ctrl.products[index].id ?? "");
+                    },
+                    icon: const Icon(Icons.delete)),
               );
             }),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Get.to(AddProductPage());
+            Get.to(const AddProductPage());
           },
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
       );
     });

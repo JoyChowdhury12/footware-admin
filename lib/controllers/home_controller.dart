@@ -12,9 +12,17 @@ class HomeController extends GetxController {
   TextEditingController productImgCtrl = TextEditingController();
   TextEditingController productPriceCtrl = TextEditingController();
 
+  String category = "general";
+  String brand = "no branded";
+  bool offer = false;
+
+  List<Product> products = [];
+
   @override
-  void onInit() {
+  Future<void> onInit() async {
     productCollection = firebaseFirestore.collection("products");
+
+    await fetchProduct();
     super.onInit();
   }
 
@@ -24,12 +32,12 @@ class HomeController extends GetxController {
       Product product = Product(
         id: doc.id,
         name: productNamectrl.text,
-        category: "Boots",
+        category: category,
         description: productDescriptionctrl.text,
         price: double.tryParse(productPriceCtrl.text),
-        brand: "Adidas",
+        brand: brand,
         image: productImgCtrl.text,
-        offer: true,
+        offer: offer,
       );
       final productJson = product.toJson();
       doc.set(productJson);
@@ -39,5 +47,45 @@ class HomeController extends GetxController {
       Get.snackbar("Error", e.toString(), colorText: Colors.red);
       print(e);
     }
+  }
+
+  fetchProduct() async {
+    try {
+      QuerySnapshot productSnapshot = await productCollection.get();
+      final List<Product> retrieveProducts = productSnapshot.docs
+          .map((doc) => Product.fromJson(doc.data() as Map<String, dynamic>))
+          .toList();
+      products.clear();
+      products.assignAll(retrieveProducts);
+      Get.snackbar("Success!", "Product fetch successfully",
+          colorText: Colors.green);
+    } catch (e) {
+      Get.snackbar("Error", e.toString(), colorText: Colors.red);
+      print(e);
+    } finally {
+      update();
+    }
+  }
+
+  deleteProduct(String id) async {
+    try {
+      await productCollection.doc(id).delete();
+      fetchProduct();
+    } catch (e) {
+      Get.snackbar("Error", e.toString(), colorText: Colors.red);
+      print(e);
+    }
+  }
+
+  setValuesDefault() {
+    productNamectrl.clear();
+    productDescriptionctrl.clear();
+    productImgCtrl.clear();
+    productPriceCtrl.clear();
+
+    category = "general";
+    brand = "no branded";
+    offer = false;
+    update();
   }
 }

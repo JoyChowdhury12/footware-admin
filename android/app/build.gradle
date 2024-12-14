@@ -1,3 +1,4 @@
+
 plugins {
     id "com.android.application"
     // START: FlutterFire Configuration
@@ -9,6 +10,7 @@ plugins {
 }
 
 android {
+
     namespace = "com.example.footware_admin"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
@@ -45,3 +47,4 @@ android {
 flutter {
     source = "../.."
 }
+
