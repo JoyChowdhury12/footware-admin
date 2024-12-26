@@ -12,8 +12,8 @@ class HomeController extends GetxController {
   TextEditingController productImgCtrl = TextEditingController();
   TextEditingController productPriceCtrl = TextEditingController();
 
-  String category = "general";
-  String brand = "no branded";
+  String category = "General";
+  String brand = "No branded";
   bool offer = false;
 
   List<Product> products = [];
@@ -43,6 +43,7 @@ class HomeController extends GetxController {
       doc.set(productJson);
       Get.snackbar("Success!", "Product added successfully",
           colorText: Colors.green);
+      setValuesDefault();
     } catch (e) {
       Get.snackbar("Error", e.toString(), colorText: Colors.red);
       print(e);
@@ -83,8 +84,8 @@ class HomeController extends GetxController {
     productImgCtrl.clear();
     productPriceCtrl.clear();
 
-    category = "general";
-    brand = "no branded";
+    category = "General";
+    brand = "No branded";
     offer = false;
     update();
   }

@@ -15,6 +15,7 @@ class AddProductPage extends StatelessWidget {
     return GetBuilder<HomeController>(builder: (ctrl) {
       return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: const Text(
             "Add Product",
           ),
@@ -93,7 +94,7 @@ class AddProductPage extends StatelessWidget {
                       ],
                       selectedItemText: ctrl.category,
                       onSelected: (selectedValue) {
-                        ctrl.category = selectedValue ?? "general";
+                        ctrl.category = selectedValue ?? "General";
                         ctrl.update();
                       },
                     )),
@@ -103,12 +104,12 @@ class AddProductPage extends StatelessWidget {
                         "Puma",
                         "Nike",
                         "Sketchers",
+                        "Bata",
                         "Adidas",
-                        "Clarks"
                       ],
                       selectedItemText: ctrl.brand,
                       onSelected: (selectedValue) {
-                        ctrl.brand = selectedValue ?? "no branded";
+                        ctrl.brand = selectedValue ?? "No branded";
                         ctrl.update();
                       },
                     )),
